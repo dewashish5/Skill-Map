@@ -1,0 +1,13 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pw
+      MYSQL_DATABASE: skillmap
+      MYSQL_USER: skillmap
+      MYSQL_PASSWORD: skillmap_pw
+    ports: ["3306:3306"]
+    command: --character-set-server=utf8mb4
+    volumes: [skillmap_db:/var/lib/mysql]
+volumes:
+  skillmap_db:

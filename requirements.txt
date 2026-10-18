@@ -1,0 +1,20 @@
+streamlit>=1.40   # 1.50 or newer recommended: pip install -U streamlit
+plotly>=5.24
+pandas
+numpy
+requests
+fastapi>=0.110
+uvicorn>=0.29
+sqlalchemy>=2.0
+pymysql>=1.1
+cryptography
+openpyxl
+reportlab
+
+# only needed to re-run the notebook
+scikit-learn
+lightgbm
+xgboost
+shap
+statsmodels
+matplotlib
