@@ -61,56 +61,56 @@ PS 26246 asks for an engine that forecasts skill demand and supply, flags where 
 ### Dashboard Overview
 > Filters for state, sector, skill, horizon and demand scenario. KPI cards, key insights (biggest shortage, biggest oversupply, most pressured state, seats to move) and a quick-start guide.
 
-![Dashboard overview](docs/screenshots/dashboard_overview.png)
+![Dashboard overview](screenshots/dashboard_overview.png)
 
 ---
 
 ### Map and Drill-down
 > India tile map coloured by gap index, high and critical share, or net gap. Click a state to open its districts and skills.
 
-![Map and drill-down](docs/screenshots/map_drilldown.png)
+![Map and drill-down](screenshots/map_drilldown.png)
 
 ---
 
 ### Gap and Risk
 > Where demand and supply diverge, ranked by risk class, with the series that need action first.
 
-![Gap and risk](docs/screenshots/gap_risk.png)
+![Gap and risk](screenshots/gap_risk.png)
 
 ---
 
 ### Explainability
 > SHAP drivers behind the forecasts and early-warning probabilities for each risk class.
 
-![Explainability](docs/screenshots/explainability.png)
+![Explainability](screenshots/explainability.png)
 
 ---
 
 ### Accuracy
 > Rolling-origin back-test of every model against naive baselines, classifier scores and the data-quality audit.
 
-![Accuracy](docs/screenshots/accuracy.png)
+![Accuracy](screenshots/accuracy.png)
 
 ---
 
 ### Recommendation Engine - Action Plan
 > Seat decisions for every district and skill, ranked by priority (P1 act now, onwards), with the number of seats to add or release.
 
-![Recommendation action plan](docs/screenshots/recommendation_action_plan.png)
+![Recommendation action plan](screenshots/recommendation_action_plan.png)
 
 ---
 
 ### What-if Simulator
 > Add or remove seats, or shock demand, and see the new gap and risk instantly before committing to a decision.
 
-![What-if simulator](docs/screenshots/what_if.png)
+![What-if simulator](screenshots/what_if.png)
 
 ---
 
 ### SkillMap Assistant
 > A chatbot that knows every number on the site. Ask in English, Hinglish or by voice. Answers come from the database, with a data table behind each one. Chat history is stored in SQL, with search, new chat and clear history.
 
-![SkillMap Assistant](docs/screenshots/assistant.png)
+![SkillMap Assistant](screenshots/assistant.png)
 
 ---
 
@@ -291,7 +291,7 @@ skillmap/
 |-- notebook/
 |   |-- LMIS_Part1_Part2.ipynb   # Cleaning, features, models, SHAP, back-tests
 |   `-- skillmap_dataset.csv     # Supplied NCS-based demand dataset
-`-- docs/screenshots/       # Screenshots used in this README
+`-- screenshots/       # Screenshots used in this README
 ```
 
 ---
