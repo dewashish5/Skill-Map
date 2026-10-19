@@ -38,13 +38,21 @@ def _load_env():
 
 
 _load_env()
-DATABASE_URL = os.environ.get("DATABASE_URL", "mysql+pymysql://skillmap:skillmap_pw@localhost:3306/skillmap")
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
+if not DATABASE_URL:
+    sqlite_file = HERE / "skillmap_local.db"
+    if sqlite_file.exists():
+        DATABASE_URL = f"sqlite:///{sqlite_file}"
+    else:
+        DATABASE_URL = "mysql+pymysql://skillmap:skillmap_pw@localhost:3306/skillmap"
+
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
 RISK = ["Low", "Medium", "High", "Critical"]
 HZ = [3, 6, 12]
 
-engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_recycle=1800)
+connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_recycle=1800, connect_args=connect_args)
 
 
 _QC: Dict[Any, Any] = {}          # small read cache: forecast tables are static between loads, chat tables are never cached
@@ -157,7 +165,12 @@ def clean(rows):
     return out
 
 
-@app.get("/health", tags=["info"])
+@app.api_route("/ping", methods=["GET", "HEAD"], tags=["info"], summary="Lightweight keep-alive ping for uptime monitors")
+def ping():
+    return {"status": "ok", "message": "pong", "time": datetime.utcnow().isoformat()}
+
+
+@app.api_route("/health", methods=["GET", "HEAD"], tags=["info"], summary="Health check with DB connection verification")
 def health():
     try:
         n = q1("SELECT COUNT(*) AS n FROM fact_series")["n"]
@@ -948,4 +961,4 @@ def targets(state: Optional[str] = None, risk: Optional[str] = None, fmt: str = 
 @app.get("/", tags=["info"])
 def root():
     return {"service": "SkillMap API", "docs": "/docs", "assistant": "POST /chat", "llm_enabled": bool(GEMINI_KEY),
-            "endpoints": ["/health", "/meta", "/areas", "/summary", "/forecast", "/district/{district}", "/series", "/high-risk", "/recommendations", "/explain", "/history", "/brief", "/whatif (POST)", "/chat (POST)"]}
+            "endpoints": ["/ping", "/health", "/meta", "/areas", "/summary", "/forecast", "/district/{district}", "/series", "/high-risk", "/recommendations", "/explain", "/history", "/brief", "/whatif (POST)", "/chat (POST)"]}
