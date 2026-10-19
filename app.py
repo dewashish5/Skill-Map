@@ -39,7 +39,15 @@ def _env():
 
 
 _env()
-API = os.environ.get("API_URL", "http://127.0.0.1:8000").rstrip("/")
+API = os.environ.get("API_URL", "").strip()
+if not API:
+    try:
+        API = str(st.secrets.get("API_URL", "")).strip()
+    except Exception:
+        API = ""
+if not API:
+    API = "http://127.0.0.1:8000"
+API = API.rstrip("/")
 
 # ----------------------------------------------------------------------------------------------- palette (from the logo)
 NAVY, BLUE, CYAN, TEAL, GREEN = "#2B3A6B", "#425B9A", "#76C0EC", "#FF95A5", "#FFC4CD"   # palette: #425B9A #76C0EC #FFF6DC #FF95A5
@@ -504,7 +512,7 @@ def local_whatif(b):
 # ----------------------------------------------------------------------------------------------- backend access
 def _api_up():
     try:
-        return requests.get(f"{API}/health", timeout=1.5).status_code == 200
+        return requests.get(f"{API}/health", timeout=4.0).status_code == 200
     except Exception:
         return False
 
